@@ -1,6 +1,6 @@
 const ShelfChanger = ({book, changeShelf}) => {
 
-    const shelfs = ["currentlyReading", "wantToRead", "read"];
+    const shelfs = ["currentlyReading", "wantToRead", "read", "none"];
 
     const handleChange = (event) => {
         changeShelf(book, event.target.value);
@@ -8,8 +8,8 @@ const ShelfChanger = ({book, changeShelf}) => {
 
     return (
         <div className="book-shelf-changer">
-            <select onChange={handleChange} value={book.shelf}>
-                <option value="none" disabled>Move to...</option>
+            <select onChange={handleChange} value={book.shelf??"none"}>
+                <option value="" disabled>Move to...</option>
                 {
                     shelfs.map((shelf) =>
                         <option key={shelf} value={shelf}>
@@ -17,7 +17,6 @@ const ShelfChanger = ({book, changeShelf}) => {
                         </option>
                     )
                 }
-                <option value="">none</option>
             </select>
         </div>
     )

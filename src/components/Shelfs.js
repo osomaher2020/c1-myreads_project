@@ -9,6 +9,7 @@ const Shelfs = ({shelfs, books, changeShelf}) => {
     return (
         shelfs.map(
             (shelf) =>
+                (shelf !== "none") &&
                 <Shelf
                 key={shelf}
                 title={shelf}

@@ -7,7 +7,7 @@ import * as BooksAPI from "./BooksAPI"
 
 function App() {
 
-  const shelfs = ["currentlyReading", "wantToRead", "read"];
+  const shelfs = ["currentlyReading", "wantToRead", "read", "none"];
 
   const [books, setBooks] = useState([]);
 

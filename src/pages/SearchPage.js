@@ -1,17 +1,12 @@
-import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Books from "../components/Books"
 import * as BooksAPI from "../BooksAPI"
+import { useState } from "react";
 
 const SearchPage = ({books, changeShelf}) => {
 
     const [searchText, setSearchText] = useState("");
     const [filteredBooks, setFilteredBooks] = useState([]);
-
-    useEffect(() => {
-        setFilteredBooks(books);
-    }, [])
-
 
     const handleChangeShelf = (book, selectedShelf) => {
         changeShelf(book, selectedShelf)
@@ -22,18 +17,23 @@ const SearchPage = ({books, changeShelf}) => {
         let searchVal = event.target.value;
         setSearchText(searchVal)
 
-        searchVal = searchVal.trim();
-
         // search the API
         if(searchVal.length) {
             const getSearchResult = async() => {
-                const searchResult = await BooksAPI.search(searchVal, 5);
+                const searchResult = await BooksAPI.search(searchVal.trim(), 5);
 
                 if(searchResult.length){
+
+                    // update result shelfs with shelfs on [books]
+                    searchResult.map((b) => {
+                        const foundBook = books.find((book) => book.id === b.id)
+                        if(foundBook){
+                            b.shelf = foundBook.shelf
+                        }
+                        return null
+                    })
+
                     setFilteredBooks(searchResult)
-                }
-                else{
-                    setFilteredBooks([])
                 }
             }
 
@@ -57,7 +57,7 @@ const SearchPage = ({books, changeShelf}) => {
             </div>
             <div className="search-books-results">
                 <ol className="books-grid">
-                    <Books books={filteredBooks} changeShelf={handleChangeShelf} />
+                    <Books books={(searchText)? filteredBooks : []} changeShelf={handleChangeShelf} />
                 </ol>
             </div>
         </div>
