@@ -14,16 +14,32 @@ function App() {
   useEffect(() => {
     const getBooks = async () => {
       const result = await BooksAPI.getAll();
+
       setBooks(result);
     }
 
     getBooks();
-  }, [])
+  }, []);
+
+
+
+  const handleChangeShelf = (book, selectedShelf) => {
+
+    // update on API
+    const updatebooks = async() => await BooksAPI.update(book, selectedShelf);
+    updatebooks();
+
+    // update books State
+    const selectedBook_key = Object.keys(books).find(key => books[key].id === book.id);
+
+    books[selectedBook_key].shelf = selectedShelf;
+    setBooks([...books]);
+  }
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<ListPage shelfs={shelfs} books={books} />} />
+        <Route path="/" element={<ListPage shelfs={shelfs} books={books} changeShelf={handleChangeShelf} />} />
         <Route path="/search" element={<SearchPage />} />
       </Routes>
     </div>
