@@ -32,15 +32,22 @@ function App() {
     // update books State
     const selectedBook_key = Object.keys(books).find(key => books[key].id === book.id);
 
-    books[selectedBook_key].shelf = selectedShelf;
-    setBooks([...books]);
+    // add new Book on the specefied shelf - if not in books
+    if(!books[selectedBook_key]){
+      book.shelf = selectedShelf;
+      setBooks([...books, book])
+    }
+    else{
+      books[selectedBook_key].shelf = selectedShelf;
+      setBooks([...books]);
+    }
   }
 
   return (
     <div className="app">
       <Routes>
         <Route path="/" element={<ListPage shelfs={shelfs} books={books} changeShelf={handleChangeShelf} />} />
-        <Route path="/search" element={<SearchPage />} />
+        <Route path="/search" element={<SearchPage books={books} changeShelf={handleChangeShelf} />} />
       </Routes>
     </div>
   );

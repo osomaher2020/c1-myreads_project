@@ -17,6 +17,7 @@ const ShelfChanger = ({book, changeShelf}) => {
                         </option>
                     )
                 }
+                <option value="">none</option>
             </select>
         </div>
     )
