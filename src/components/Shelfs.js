@@ -1,4 +1,5 @@
 import Shelf from "./Shelf"
+import PropTypes from "prop-types"
 
 const Shelfs = ({shelfs, books, changeShelf}) => {
 
@@ -18,6 +19,12 @@ const Shelfs = ({shelfs, books, changeShelf}) => {
                 />
         )
     )
+}
+
+Shelfs.propTypes = {
+    shelfs: PropTypes.array.isRequired,
+    books: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
 }
 
 export default Shelfs
